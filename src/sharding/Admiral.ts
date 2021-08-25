@@ -21,7 +21,7 @@ export interface ObjectLog {
 	source?: string;
 	timestamp: number;
 	message: unknown;
-} 
+}
 
 export interface StartingStatus {
 	status: "online" | "idle" | "dnd" | "offline";
@@ -76,42 +76,42 @@ export interface Options {
 	path: string;
 	/** Bot token */
 	token: string;
-	/** 
+	/**
 	 * Guilds per shard
 	 * @defaultValue 1300
 	 */
 	guildsPerShard?: number;
-	/** 
+	/**
 	 * Number of shards
 	 * @defaultValue "auto"
 	 */
 	shards?: number | "auto";
-	/** 
+	/**
 	 * Number of clusters
 	 * @defaultValue "auto"
 	 */
 	clusters?: number | "auto";
 	/** Options to pass to the Eris client constructor */
 	clientOptions?: Eris.ClientOptions;
-	/** 
+	/**
 	 * How long to wait for shards to connect to discord
-	 * 
+	 *
 	 * @deprecated Use the `connectionTimeout` property of {@link Options.clientOptions}
 	 */
 	timeout?: number;
-	/** 
+	/**
 	 * How long to wait for a service to start
 	 * @defaultValue 0
 	 */
 	serviceTimeout?: number;
-	/** 
+	/**
 	 * How long between starting clusters
 	 * @defaultValue 5e3
 	 */
 	clusterTimeout?: number;
 	/** Node arguments to pass to the clusters */
 	nodeArgs?: string[];
-	/** 
+	/**
 	 * How often to update the stats after all clusters are spawned (set to "disable" to disable automated stats)
 	 * @defaultValue 60e3
 	 */
@@ -122,16 +122,16 @@ export interface Options {
 	firstShardID?: number;
 	/** Last shard ID to use on this instance of eris-fleet */
 	lastShardID?: number;
-	/** 
+	/**
 	 * Option to have less logging show up
 	 * @defaultValue false
 	 */
 	lessLogging?: boolean;
-	/** 
+	/**
 	 * Allows for more logging customization (overrides generic lessLogging option)
-	 * 
+	 *
 	 * @see {@link LoggingOptions} See for available options
-	 * 
+	 *
 	 * @example
 	 * ```js
 	 * const options = {
@@ -149,12 +149,12 @@ export interface Options {
 		/** Blacklist of what to log */
 		blacklist?: LoggingOptions[];
 	};
-	/** 
+	/**
 	 * Amount of time to wait in ms before doing a forced shutdown during shutdowns
 	 * @defaultValue 10e3
 	 */
 	killTimeout?: number;
-	/** 
+	/**
 	 * Whether to split the source in to an Object
 	 * @defaultValue false
 	 * @see {@link ObjectLog} See for the object which is given in the logging event if this option is enabled
@@ -162,14 +162,14 @@ export interface Options {
 	objectLogging?: boolean;
 	/** Custom starting status */
 	startingStatus?: StartingStatus;
-	/** 
+	/**
 	 * How long to wait in ms before giving up on a fetch (includes eval functions and commands)
 	 * @defaultValue 10e3
 	 */
 	fetchTimeout?: number;
 	/** Extended eris client class (should extend Eris.Client) */
 	customClient?: typeof Eris.Client;
-	/** 
+	/**
 	 * Whether to use a central request handler.
 	 * The central request handler routes Eris requests to the Discord API through a single instance of the Eris RequestHandler.
 	 * This helps prevent 429 errors from the Discord API by using a single rate limiter pool.
@@ -182,7 +182,7 @@ export interface Options {
 	 * @defaultValue false
 	 */
 	loadCodeImmediately?: boolean;
-	/** 
+	/**
 	 * Whether to override console.log, console.debug, console.warn, and console.error in clusters and services
 	 * @defaultValue true
 	 */
@@ -298,7 +298,7 @@ interface WorkerCollection {
 	};
 }
 
-/** 
+/**
  * The sharding manager.
  * @example
  * ```js
@@ -307,26 +307,26 @@ interface WorkerCollection {
  * const path = require('path');
  * const { inspect } = require('util');
  * require('dotenv').config();
- * 
+ *
  * const options = {
  * 	path: path.join(__dirname, "./bot.js"),
  * 	token: process.env.token
  * }
- * 
+ *
  * const Admiral = new Fleet(options);
- * 
+ *
  * if (isMaster) {
  * 	// Code to only run for your master process
  * 	Admiral.on('log', m => console.log(m));
  * 	Admiral.on('debug', m => console.debug(m));
  * 	Admiral.on('warn', m => console.warn(m));
  * 	Admiral.on('error', m => console.error(inspect(m)));
- * 
+ *
  * 	// Logs stats when they arrive
  * 	Admiral.on('stats', m => console.log(m));
  * }
  * ```
- * 
+ *
  * @fires Admiral#log Message to log. Supplies either a message or an {@link ObjectLog}.
  * @fires Admiral#debug Debug message to log. Supplies either a message or an {@link ObjectLog}.
  * @fires Admiral#warn Warning message to log. Supplies either a message or an {@link ObjectLog}.
@@ -393,7 +393,7 @@ export class Admiral extends EventEmitter {
 	private maxConcurrency: number;
 	private shutdownTogether: boolean;
 
-	/** 
+	/**
 	 * Creates the sharding manager
 	 * @param options Options to configure the sharding manager
 	*/
@@ -1288,7 +1288,7 @@ export class Admiral extends EventEmitter {
 				reply(false, msg);
 			});
 	}
-	
+
 	/**
 	 * Restarts a specific cluster
 	 * @param clusterID ID of the cluster to restart
@@ -1417,7 +1417,7 @@ export class Admiral extends EventEmitter {
 		}
 	}
 
-	/** 
+	/**
 	 * Create a service
 	 * @param serviceName Unique ame of the service
 	 * @param servicePath Absolute path to the service file
@@ -1517,7 +1517,7 @@ export class Admiral extends EventEmitter {
 		}
 	}
 
-	/** Reshard 
+	/** Reshard
 	 * @param options Change the resharding options
 	*/
 	public reshard(options?: ReshardOptions): void {
@@ -1598,7 +1598,7 @@ export class Admiral extends EventEmitter {
 					path: service.path,
 					serviceName: service.name,
 				}); */
-	
+
 				this.launchingWorkers.set(worker.id, {
 					service: {
 						path: service.path,
@@ -1606,7 +1606,7 @@ export class Admiral extends EventEmitter {
 						workerID: worker.id,
 					},
 				});
-	
+
 				queueItems.push({
 					type: "service",
 					workerID: worker.id,
@@ -1683,7 +1683,7 @@ export class Admiral extends EventEmitter {
 
 			const cluster = this.launchingWorkers.find((w: WorkerCollection) => w.cluster?.clusterID == ID).cluster;
 
-			
+
 			queueItems.push({
 				type: "cluster",
 				workerID: cluster.workerID,
@@ -2217,5 +2217,9 @@ export class Admiral extends EventEmitter {
 
 	public warn(message: unknown, source?: string): void {
 		this.emitLog("warn", message, source);
+	}
+
+	public getCentralRequestHandlerLatency() {
+		return this.eris.requestHandler.latencyRef.latency;
 	}
 }
