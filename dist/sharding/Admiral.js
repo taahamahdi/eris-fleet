@@ -1834,6 +1834,9 @@ class Admiral extends events_1.EventEmitter {
     warn(message, source) {
         this.emitLog("warn", message, source);
     }
+    getCentralRequestHandlerLatency() {
+        return this.eris.requestHandler.latencyRef.latency;
+    }
 }
 exports.Admiral = Admiral;
 //# sourceMappingURL=Admiral.js.map

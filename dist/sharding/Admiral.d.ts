@@ -395,5 +395,6 @@ export declare class Admiral extends EventEmitter {
     debug(message: unknown, source?: string): void;
     log(message: unknown, source?: string): void;
     warn(message: unknown, source?: string): void;
+    getCentralRequestHandlerLatency(): number;
 }
 export {};
