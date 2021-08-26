@@ -1285,6 +1285,7 @@ export class Admiral extends EventEmitter {
 					msg.error = errorToJSON(error);
 					msg.convertedErrorObject = true;
 				}
+				this.emit("debug", msg);
 				reply(false, msg);
 			});
 	}

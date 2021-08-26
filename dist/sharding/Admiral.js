@@ -941,6 +941,7 @@ class Admiral extends events_1.EventEmitter {
                 msg.error = ErrorHandler_1.errorToJSON(error);
                 msg.convertedErrorObject = true;
             }
+            this.emit("debug", msg);
             reply(false, msg);
         });
     }
